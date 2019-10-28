@@ -28,15 +28,25 @@ class RuleMessage{
 		messageChart.display();
 		pushStyle();
 		fill(0);
-		textSize(25);
+		// textSize(25);
+		textSize(20);
 		textAlign(LEFT);
-		text("(auto aiming)", width/5, height*3/10);
-		text("Press Z: Weak shoot.",width/5, height*4/10 );
-		text("Press X: Strong shoot.",width/5, height*5/10 );
-		text("Press Up, Down, Left, Right to control.",width/5, height*6/10);
+		text("(auto aiming)", width/5, height*3/13);
+		text("Player1", width/5, height*4/13);
+		text("Press Q: Weak shoot.", width/5, height*5/13);
+		text("Press E: Strong shoot.", width/5, height*6/13);
+		text("Press W, S, A, D to control.", width/5, height*7/13);
+		text("Player2", width/5, height*8/13);
+		text("Press U: Weak shoot.", width/5, height*9/13);
+		text("Press O: Strong shoot.", width/5, height*10/13);
+		text("Press I, K, J, L to control.", width/5, height*11/13);
+		// text("(auto aiming)", width/5, height*3/10);
+		// text("Press Z: Weak shoot.",width/5, height*4/10 );
+		// text("Press X: Strong shoot.",width/5, height*5/10 );
+		// text("Press Up, Down, Left, Right to control.",width/5, height*6/10);
 		textSize(24);
 		textAlign(CENTER);
-		text("Press X to start game.",width/2, height*7/10 );
+		// text("Press X to start game.",width/2, height*7/10 );
 		popStyle();	
 	}
 }
