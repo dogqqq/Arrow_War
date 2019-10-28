@@ -1,11 +1,13 @@
 boolean gameStart = false;
+int condition = 0;
 PFont tFont;
 KeyInput keyInput = new KeyInput();
 KeyInput keyInput1 = new KeyInput();
 KeyInput keyInput2 = new KeyInput();
 GameCharacter gameCharacter = new GameCharacter();
 GameBackground gameBackground = new GameBackground();
-
+WelcomeMessage welcomeMessage = new WelcomeMessage();
+OutcomeMessage outcomeMessage;
 
 void setup(){
   size(700, 800);
@@ -21,5 +23,24 @@ void setup(){
 
 void draw(){
   gameBackground.run();
-  gameCharacter.run();
+  if(!gameStart && keyInput.xPressed){
+    condition ++ ;
+    delay(100);
+  }
+  if(condition == 0 && !gameStart){
+    welcomeMessage.displayTitle();
+  }
+  if(condition == 1 && !gameStart){
+    welcomeMessage.displayRule();
+  }
+  if(condition == 2 && !gameStart){
+    gameStart = true;
+  }
+  else if(!gameStart){
+    gameCharacter.display();
+  }
+  else if(gameStart){
+    gameCharacter.run();
+  }
+
 }

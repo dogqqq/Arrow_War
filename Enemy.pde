@@ -123,8 +123,8 @@ class Enemy extends Character{
 		}
 		if(enemy.strongArrow.xPosition + enemy.strongArrow.arrowSize*cos(enemy.strongArrow.aimAngle) >= xPosition - 40 &&
 			enemy.strongArrow.xPosition + enemy.strongArrow.arrowSize*cos(enemy.strongArrow.aimAngle) <= xPosition + 40 &&
-			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) >= xPosition - 40	&&
-			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) <= xPosition + 40 &&
+			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) >= yPosition - 40	&&
+			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) <= yPosition + 40 &&
 			!enemy.strongArrow.arrowControl){
 			strongShotState = true;
 		}

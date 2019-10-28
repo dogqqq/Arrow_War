@@ -4,10 +4,10 @@ void keyPressed() {
     //   keyInput.zPressed = true;
     //   return;
     // }
-    // if (key == 'x' || key == 'X') {
-    //   keyInput.xPressed = true;
-    //   return;
-    // }
+    if (key == 'x' || key == 'X') {
+      keyInput.xPressed = true;
+      return;
+    }
     //player1
     if (key == 'w' || key == 'W') {
       keyInput1.upPressed = true;
@@ -85,10 +85,10 @@ void keyReleased() {
     //   keyInput.zPressed = false;
     //   return;
     // }
-    // if (key == 'x' || key == 'X') {
-    //   keyInput.xPressed = false;
-    //   return;
-    // }
+    if (key == 'x' || key == 'X') {
+      keyInput.xPressed = false;
+      return;
+    }
     //player1
     if (key == 'w' || key == 'W') {
       keyInput1.upPressed = false;

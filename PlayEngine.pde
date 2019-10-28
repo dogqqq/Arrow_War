@@ -1,6 +1,8 @@
 class GameCharacter{
 	// Player player = new Player();
 	// Enemy enemy = new Enemy();
+	int condition;
+
 	Player player1 = new Player(keyInput1);
 	Enemy player2 = new Enemy(keyInput2);
 
@@ -44,14 +46,23 @@ class GameCharacter{
 	// 		enemy.display();
 	// 	}
 	// }
-	void run(){
+	void display(){
 		if(player2.strongShotState){
+			condition = 5;
 			gameStart = false;
+			player1.updateRotatingRate();
 			player1.display();
 		}
 		else if(player1.strongShotState){
+			condition = 6;
 			gameStart = false;
+			player2.updateRotatingRate();
 			player2.display();
+		}
+	}
+	void run(){
+		if(player2.strongShotState || player1.strongShotState){
+			gameStart = false;
 		}
 		else{
 			updatePlayer1();
