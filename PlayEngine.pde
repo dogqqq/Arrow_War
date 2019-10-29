@@ -13,6 +13,11 @@ class GameCharacter{
 		player2.setOriginPosition();
 	}
 
+	void setStartPosition(){
+		player1.setOriginPosition();
+		player2.setOriginPosition();
+	}
+
 	void updatePlayer1(){
 		player1.update();
 		player1.addWeakShot(player2);
@@ -46,6 +51,12 @@ class GameCharacter{
 	// 		enemy.display();
 	// 	}
 	// }
+	void displayShow(){
+		player1.updateRotatingRate();
+		player1.display();
+		player2.updateRotatingRate();
+		player2.display();
+	}
 	void display(){
 		if(player2.strongShotState){
 			condition = 5;

@@ -1,4 +1,3 @@
-
 class Enemy extends Character{
 	ArrayList<WeakArrow> weakArrowArr = new ArrayList<WeakArrow>();
 	WeakArrow weakArrowTmp = new WeakArrow(keyInput2);

@@ -55,7 +55,7 @@ class RuleMessage{
 	}
 }
 class LoseMessage{
-	float place;
+	float place = -500;
 	LoseMessage(int condition){
 		if(condition == 6){
 			place = width/4;

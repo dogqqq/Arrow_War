@@ -1,5 +1,6 @@
-boolean gameStart = false;
-int condition = 0;
+boolean gameStart = false, laugh = false;
+int condition;
+int time;
 PFont tFont;
 KeyInput keyInput = new KeyInput();
 KeyInput keyInput1 = new KeyInput();
@@ -23,21 +24,45 @@ void setup(){
 
 void draw(){
   gameBackground.run();
-  if(!gameStart && keyInput.xPressed){
+  println("time: ", + time);
+  println("second(): " + second());
+  if(!gameStart && keyInput.xPressed && (second() - time >= 1 || second() - time >= -59 && second() - time < 0) ){
+    time = second();
     condition ++ ;
-    delay(100);
+    if(condition == 4){
+      laugh = true;
+    }
+    else{
+      laugh = false;
+    }
+    if(condition == 5){
+      gameCharacter.player2.strongShotState = false;
+      gameCharacter.player1.strongShotState = false;
+      gameCharacter.setStartPosition();
+      condition = 0;
+    }
+    //delay(200);
   }
-  if(condition == 0 && !gameStart){
+  else if(condition == 0 && !gameStart){
+    gameCharacter.displayShow();
     welcomeMessage.displayTitle();
   }
-  if(condition == 1 && !gameStart){
+  else if(condition == 1 && !gameStart){
+    gameCharacter.displayShow();
     welcomeMessage.displayRule();
   }
-  if(condition == 2 && !gameStart){
+  else if(condition == 2 && !gameStart){
+    condition ++;
     gameStart = true;
   }
-  else if(!gameStart){
+  else if((gameCharacter.player2.strongShotState || gameCharacter.player1.strongShotState) && !laugh && !gameStart){
     gameCharacter.display();
+    outcomeMessage = new OutcomeMessage(gameCharacter.condition);
+    outcomeMessage.display();
+  }
+  else if(condition == 4 && !gameStart){
+    gameCharacter.display();
+    outcomeMessage.displayLaugh();
   }
   else if(gameStart){
     gameCharacter.run();
