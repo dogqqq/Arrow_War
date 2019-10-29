@@ -36,9 +36,7 @@ void draw(){
       laugh = false;
     }
     if(condition == 5){
-      gameCharacter.player2.strongShotState = false;
-      gameCharacter.player1.strongShotState = false;
-      gameCharacter.setStartPosition();
+      gameCharacter = new GameCharacter();
       condition = 0;
     }
     //delay(200);

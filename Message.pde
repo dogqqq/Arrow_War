@@ -32,17 +32,18 @@ class RuleMessage{
 		textSize(20);
 		textAlign(CENTER);
 		text("(auto aiming)", width/2, height*3/14);
-		text("Player1", width/2, height*3.8/14);
+		text("Right Player Black", width/2, height*3.8/14);
 		textAlign(LEFT);
-		text("Press Q: Weak shoot.", width/5, height*4.6/14);
-		text("Press E: Strong shoot.", width/5, height*5.4/14);
-		text("Press W, S, A, D to control.", width/5, height*6.2/14);
+		text("Press U: Weak shoot. (slow down enemy)", width/5, height*4.6/14);
+		text("Press O: Strong shoot. (need charging)", width/5, height*5.4/14);
+		text("Press I, K, J, L to control.", width/5, height*6.2/14);
 		textAlign(CENTER);
-		text("Player2", width/2, height*7.4/14);
+		text("Left Player White", width/2, height*7.4/14);
 		textAlign(LEFT);
-		text("Press U: Weak shoot.", width/5, height*8.2/14);
-		text("Press O: Strong shoot.", width/5, height*9/14);
-		text("Press I, K, J, L to control.", width/5, height*9.8/14);
+		text("Press Q: Weak shoot. (slow down enemy)", width/5, height*8.2/14);
+		text("Press E: Strong shoot. (need charging)", width/5, height*9/14);
+		text("Press W, S, A, D to control.", width/5, height*9.8/14);
+
 		// text("(auto aiming)", width/5, height*3/10);
 		// text("Press Z: Weak shoot.",width/5, height*4/10 );
 		// text("Press X: Strong shoot.",width/5, height*5/10 );
