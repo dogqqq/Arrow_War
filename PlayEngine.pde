@@ -8,12 +8,11 @@ class GameCharacter{
 		playerWhite.setOriginPosition();
 		playerBlack.setOriginPosition();
 	}
-
+	
 	void setStartPosition(){
 		playerWhite.setOriginPosition();
 		playerBlack.setOriginPosition();
 	}
-
 	void updatePlayerWhite(){
 		playerWhite.update();
 		playerWhite.addWeakShot(playerBlack);

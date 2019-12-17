@@ -16,6 +16,29 @@ abstract class Information{
 }
 
 abstract class Character extends Information{
+
+	float moveDeltaX, moveDeltaY, aimDeltaX, aimDeltaY;
+	boolean strongShotBtn = false, weakShotBtn = false;
+
+	void setMoveDeltaX(float _moveDeltaX){
+		moveDeltaX = _moveDeltaX;
+	}
+	void setMoveDeltaY(float _moveDeltaY){
+		moveDeltaY = _moveDeltaY;
+	}
+	void setAimDeltaX(float _aimDeltaX){
+		aimDeltaX = _aimDeltaX;
+	}
+	void setAimDeltaX(float _aimDeltaY){
+		aimDeltaY = _aimDeltaY;
+	}
+	void setStrongShotBtn(boolean _strongShotBtn){
+		strongShotBtn = _strongShotBtn;
+	}
+	void setWeakShotBtn(boolean _weakShotBtn){
+		weakShotBtn = _weakShotBtn;
+	}
+
 	float rotatingRate, rotatingAddRate;
 	float rotateScalar = 0.015;
 	float accelarationAddRate = 0.3;

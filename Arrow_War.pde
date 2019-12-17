@@ -1,3 +1,5 @@
+import processing.serial.*;
+
 boolean gameStart = false, laugh = false;
 int condition;
 int time;
@@ -10,6 +12,11 @@ GameBackground gameBackground = new GameBackground();
 WelcomeMessage welcomeMessage = new WelcomeMessage();
 OutcomeMessage outcomeMessage;
 
+int lf = 10;
+Serial playerWhitePort, playerBlackPort;
+String playerWhiteString = null, playerBlackString = null;
+JSONObject json;
+
 void setup(){
   size(700, 800);
   background(255);
@@ -17,6 +24,12 @@ void setup(){
   frameRate(100);
   tFont = createFont("Lato-Regular.ttf", 96.0, true);
   textFont(tFont, 96.0);
+
+  playerWhitePort = new Serial(this, Serial.list()[?], 9600);  //unchecked port
+  playerBlackPort = new Serial(this, Serial.list()[?], 9600);  //unchecked port
+  playerWhitePort.clear();
+  playerBlackPort.clear();
+
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   ellipseMode(CENTER);
@@ -26,6 +39,38 @@ void draw(){
   gameBackground.run();
   println("time: ", + time);
   println("second(): " + second());
+
+  if( playerWhitePort.available() > 0) {
+    playerWhiteString = playerWhitePort.readStringUntil(lf);
+    if (playerWhiteString != null) {
+      json = parseJSONObject(playerWhiteString);
+      gameCharacter.playerWhite.setMoveDeltaX(json.getFloat(lx));
+      gameCharacter.playerWhite.setMoveDeltaY(json.getFloat(ly));
+      //json.getBoolean(l)
+      gameCharacter.playerWhite.setStrongShotBtn(json.getBoolean(zl));
+      gameCharacter.playerWhite.setAimDeltaX(json.getFloat(rx));
+      gameCharacter.playerWhite.setAimDeltaY(json.getFloat(ry));
+      //json.getBoolean(r);
+      gameCharacter.playerWhite.setWeakShotBtn(json.getBoolean(zr));
+    }
+  }
+
+  if( playerBlackPort.available() > 0) {
+    playerBlackString = playerBlackPort.readStringUntil(lf);
+    if (playerBlackString != null) {
+      json = parseJSONObject(playerBlackString);
+      gameCharacter.playerBlack.setMoveDeltaX(json.getFloat(lx));
+      gameCharacter.playerBlack.setMoveDeltaY(json.getFloat(ly));
+      //json.getBoolean(l)
+      gameCharacter.playerBlack.setStrongShotBtn(json.getBoolean(zl));
+      gameCharacter.playerBlack.setAimDeltaX(json.getFloat(rx));
+      gameCharacter.playerBlack.setAimDeltaY(json.getFloat(ry));
+      //json.getBoolean(r);
+      gameCharacter.playerBlack.setWeakShotBtn(json.getBoolean(zr));
+
+    }
+  }
+
   if(!gameStart && keyInput.xPressed && (second() - time >= 1 || second() - time >= -59 && second() - time < 0) ){
     time = second();
     condition ++ ;
