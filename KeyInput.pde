@@ -1,61 +1,57 @@
 void keyPressed() {
   if (key != CODED) {
-    // if (key == 'z' || key == 'Z') {
-    //   keyInput.zPressed = true;
-    //   return;
-    // }
     if (key == 'x' || key == 'X') {
       keyInput.xPressed = true;
       return;
     }
-    //player1
+    //playerWhite
     if (key == 'w' || key == 'W') {
-      keyInput1.upPressed = true;
+      keyInputWhite.upPressed = true;
       return;
     }
     if (key == 's' || key == 'S') {
-      keyInput1.downPressed = true;
+      keyInputWhite.downPressed = true;
       return;
     }
     if (key == 'a' || key == 'A') {
-      keyInput1.leftPressed = true;
+      keyInputWhite.leftPressed = true;
       return;
     }
     if (key == 'd' || key == 'D') {
-      keyInput1.rightPressed = true;
+      keyInputWhite.rightPressed = true;
       return;
     }
     if (key == 'q' || key == 'Q') {
-      keyInput1.zPressed = true;
+      keyInputWhite.zPressed = true;
       return;
     }
     if (key == 'e' || key == 'E') {
-      keyInput1.xPressed = true;
+      keyInputWhite.xPressed = true;
       return;
     }
-    //player2
+    //playerBlack
     if (key == 'i' || key == 'I') {
-      keyInput2.upPressed = true;
+      keyInputBlack.upPressed = true;
       return;
     }
     if (key == 'j' || key == 'J') {
-      keyInput2.leftPressed = true;
+      keyInputBlack.leftPressed = true;
       return;
     }
     if (key == 'l' || key == 'L') {
-      keyInput2.rightPressed = true;
+      keyInputBlack.rightPressed = true;
       return;
     }
     if (key == 'k' || key == 'K') {
-      keyInput2.downPressed = true;
+      keyInputBlack.downPressed = true;
       return;
     }
     if (key == 'u' || key == 'U') {
-      keyInput2.zPressed = true;
+      keyInputBlack.zPressed = true;
       return;
     }
     if (key == 'o' || key == 'O') {
-      keyInput2.xPressed = true;
+      keyInputBlack.xPressed = true;
       return;
     }
     return;
@@ -81,62 +77,58 @@ void keyPressed() {
 }
 void keyReleased() {
   if (key != CODED) {
-    // if (key == 'z' || key == 'Z') {
-    //   keyInput.zPressed = false;
-    //   return;
-    // }
     if (key == 'x' || key == 'X') {
       keyInput.xPressed = false;
       return;
     }
-    //player1
+    //playerWhite
     if (key == 'w' || key == 'W') {
-      keyInput1.upPressed = false;
+      keyInputWhite.upPressed = false;
       return;
     }
     if (key == 's' || key == 'S') {
-      keyInput1.downPressed = false;
+      keyInputWhite.downPressed = false;
       return;
     }
     if (key == 'a' || key == 'A') {
-      keyInput1.leftPressed = false;
+      keyInputWhite.leftPressed = false;
       return;
     }
     if (key == 'd' || key == 'D') {
-      keyInput1.rightPressed = false;
+      keyInputWhite.rightPressed = false;
       return;
     }
     if (key == 'q' || key == 'Q') {
-      keyInput1.zPressed = false;
+      keyInputWhite.zPressed = false;
       return;
     }
     if (key == 'e' || key == 'E') {
-      keyInput1.xPressed = false;
+      keyInputWhite.xPressed = false;
       return;
     }
-    //player2
+    //playerBlack
     if (key == 'i' || key == 'I') {
-      keyInput2.upPressed = false;
+      keyInputBlack.upPressed = false;
       return;
     }
     if (key == 'j' || key == 'J') {
-      keyInput2.leftPressed = false;
+      keyInputBlack.leftPressed = false;
       return;
     }
     if (key == 'l' || key == 'L') {
-      keyInput2.rightPressed = false;
+      keyInputBlack.rightPressed = false;
       return;
     }
     if (key == 'k' || key == 'K') {
-      keyInput2.downPressed = false;
+      keyInputBlack.downPressed = false;
       return;
     }
     if (key == 'u' || key == 'U') {
-      keyInput2.zPressed = false;
+      keyInputBlack.zPressed = false;
       return;
     }
     if (key == 'o' || key == 'O') {
-      keyInput2.xPressed = false;
+      keyInputBlack.xPressed = false;
       return;
     }
     return;

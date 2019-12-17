@@ -3,8 +3,8 @@ int condition;
 int time;
 PFont tFont;
 KeyInput keyInput = new KeyInput();
-KeyInput keyInput1 = new KeyInput();
-KeyInput keyInput2 = new KeyInput();
+KeyInput keyInputWhite = new KeyInput();
+KeyInput keyInputBlack = new KeyInput();
 GameCharacter gameCharacter = new GameCharacter();
 GameBackground gameBackground = new GameBackground();
 WelcomeMessage welcomeMessage = new WelcomeMessage();
@@ -53,7 +53,7 @@ void draw(){
     condition ++;
     gameStart = true;
   }
-  else if((gameCharacter.player2.strongShotState || gameCharacter.player1.strongShotState) && !laugh && !gameStart){
+  else if((gameCharacter.playerBlack.strongShotState || gameCharacter.playerWhite.strongShotState) && !laugh && !gameStart){
     gameCharacter.display();
     outcomeMessage = new OutcomeMessage(gameCharacter.condition);
     outcomeMessage.display();

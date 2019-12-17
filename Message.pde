@@ -6,6 +6,7 @@ class MessageChart{
 		popStyle();
 	}
 }
+
 class TitleMessage{
 	MessageChart messageChart = new MessageChart();
 
@@ -21,6 +22,7 @@ class TitleMessage{
 		popStyle();
 	}
 }
+
 class RuleMessage{
 	MessageChart messageChart = new MessageChart();
 
@@ -28,7 +30,6 @@ class RuleMessage{
 		messageChart.display();
 		pushStyle();
 		fill(0);
-		// textSize(25);
 		textSize(20);
 		textAlign(CENTER);
 		text("(auto aiming)", width/2, height*3/14);
@@ -43,20 +44,16 @@ class RuleMessage{
 		text("Press Q: Weak shoot. (slow down enemy)", width/5, height*8.2/14);
 		text("Press E: Strong shoot. (need charging)", width/5, height*9/14);
 		text("Press W, S, A, D to control.", width/5, height*9.8/14);
-
-		// text("(auto aiming)", width/5, height*3/10);
-		// text("Press Z: Weak shoot.",width/5, height*4/10 );
-		// text("Press X: Strong shoot.",width/5, height*5/10 );
-		// text("Press Up, Down, Left, Right to control.",width/5, height*6/10);
 		textSize(24);
 		textAlign(CENTER);
 		text("Press X to start the game. ", width/2, height*11/14);
-		// text("Press X to start game.",width/2, height*7/10 );
 		popStyle();	
 	}
 }
+
 class LoseMessage{
 	float place = -500;
+
 	LoseMessage(int condition){
 		if(condition == 6){
 			place = width/4;
@@ -65,12 +62,12 @@ class LoseMessage{
 			place = width*3/4;
 		}
 	}
+	
 	void display(){
 		pushStyle();
 		fill(0);
 		textSize(120/2);
 		text("Lose", place, height*4/9);
-		// text("Lose", width/2, height*4/9);
 		textSize(25);
 		text("Press X to start a new game", width/2, height*5.25/9);
 		popStyle();
@@ -84,8 +81,10 @@ class LoseMessage{
 		popStyle();
 	}
 }
+
 class VictoryMessage{
 	float place;
+
 	VictoryMessage(int condition){
 		if(condition == 5){
 			place = width/4;
@@ -94,18 +93,17 @@ class VictoryMessage{
 			place = width*3/4;
 		}
 	}
+
 	void display(){
 		pushStyle();
 		fill(0);
 		textSize(120/2);
 		text("Victory", place, height*4/9);
-		//text("Victory", width/2, height*4/9);
 		textSize(25/2);
-		//text("Press X to start a new game", place, height*5.25/9);
-		//text("Press X to start a new game", width/2, height*5.25/9);
 		popStyle();
 	}
 }
+
 class WelcomeMessage{
 	TitleMessage titleMessage = new TitleMessage();
 	RuleMessage ruleMessage = new RuleMessage();
@@ -117,6 +115,7 @@ class WelcomeMessage{
 		ruleMessage.display();
 	}
 }
+
 class OutcomeMessage{
 	int condition;
 	LoseMessage loseMessage;
