@@ -20,6 +20,25 @@ abstract class Character extends Information{
 	float moveDeltaX, moveDeltaY, aimDeltaX, aimDeltaY;
 	boolean strongShotBtn = false, weakShotBtn = false;
 
+	float rotatingRate, rotatingAddRate;
+	float rotateScalar = 0.015;
+	float accelarationAddRate = 0.3;
+	float accelarationBound = 1.0;
+	float xVelocityBound, yVelocityBound;
+	int arrowNum;
+	boolean strongArrowAdded = false;
+	int weakInjuryTime, strongInjuryTime, time;
+	ArrayList<WeakArrow> weakArrowArr = new ArrayList<WeakArrow>();
+	WeakArrow weakArrowTmp;
+	StrongArrow strongArrow;
+	KeyInput keyInput = new KeyInput();
+
+	Character(KeyInput _keyInput){
+		keyInput = _keyInput; 
+		weakArrowTmp = new WeakArrow(keyInput);
+		strongArrow = new StrongArrow(keyInput);
+	}
+
 	void setMoveDeltaX(float _moveDeltaX){
 		moveDeltaX = _moveDeltaX;
 	}
@@ -39,25 +58,6 @@ abstract class Character extends Information{
 		weakShotBtn = _weakShotBtn;
 	}
 
-	float rotatingRate, rotatingAddRate;
-	float rotateScalar = 0.015;
-	float accelarationAddRate = 0.3;
-	float accelarationBound = 1.0;
-	float velocityBound;
-	int arrowNum;
-	boolean strongArrowAdded = false;
-	int weakInjuryTime, strongInjuryTime, time;
-	ArrayList<WeakArrow> weakArrowArr = new ArrayList<WeakArrow>();
-	WeakArrow weakArrowTmp;
-	StrongArrow strongArrow;
-	KeyInput keyInput = new KeyInput();
-
-	Character(KeyInput _keyInput){
-		keyInput = _keyInput; 
-		weakArrowTmp = new WeakArrow(keyInput);
-		strongArrow = new StrongArrow(keyInput);
-	}
-
 	void reset(){
 		xVelocity = 0;
 		yVelocity = 0;
@@ -66,16 +66,16 @@ abstract class Character extends Information{
 		rotatingAddRate = 0;
 	}
 	void updateAccelaration(){
-		if (keyInput.upPressed && yAccelaration >= -accelarationBound) {
+		if (moveDeltaY < 0 && yAccelaration >= -accelarationBound) {
 			yAccelaration -= accelarationAddRate;
 		}
-		if (keyInput.downPressed && yAccelaration <= accelarationBound) {
+		if (moveDeltaY > 0 && yAccelaration <= accelarationBound) {
 			yAccelaration += accelarationAddRate;
 		}
-		if(keyInput.rightPressed && xAccelaration <= accelarationBound){
+		if(moveDeltaX > 0 && xAccelaration <= accelarationBound){
 			xAccelaration += accelarationAddRate;
 		}
-		if(keyInput.leftPressed && xAccelaration >= -accelarationBound){
+		if(moveDeltaX < 0 && xAccelaration >= -accelarationBound){
 			xAccelaration -= accelarationAddRate;				
 		}
 		if(noDirectionPressed()){
@@ -83,26 +83,47 @@ abstract class Character extends Information{
 			yAccelaration = 0;
 		}
 	}
+	// void updateAccelaration(){
+	// 	if (keyInput.upPressed && yAccelaration >= -accelarationBound) {
+	// 		yAccelaration -= accelarationAddRate;
+	// 	}
+	// 	if (keyInput.downPressed && yAccelaration <= accelarationBound) {
+	// 		yAccelaration += accelarationAddRate;
+	// 	}
+	// 	if(keyInput.rightPressed && xAccelaration <= accelarationBound){
+	// 		xAccelaration += accelarationAddRate;
+	// 	}
+	// 	if(keyInput.leftPressed && xAccelaration >= -accelarationBound){
+	// 		xAccelaration -= accelarationAddRate;				
+	// 	}
+	// 	if(noDirectionPressed()){
+	// 		xAccelaration = 0;
+	// 		yAccelaration = 0;
+	// 	}
+	// }
 	void updateVelocity(StrongArrow strongArrow){
 		if(isWeakShot()){
-			velocityBound = 2;
+			xVelocityBound = 2*abs(moveDeltaX);
+			yVelocityBound = 2*abs(moveDeltaY);
 		}
 		else if(isStrongShot() && strongArrow.arrowControl){
-			velocityBound = 0.5;
+			xVelocityBound = 0.5*abs(moveDeltaX);
+			yVelocityBound = 0.5*abs(moveDeltaY);
 		}
 		else{
-			velocityBound = 5;
+			xVelocityBound = 5*abs(moveDeltaX);
+			yVelocityBound = 5*abs(moveDeltaY);
 		}
-		if(xVelocity >= -velocityBound && xVelocity <= velocityBound){
+		if(xVelocity >= -xVelocityBound && xVelocity <= xVelocityBound){
 			xVelocity += xAccelaration;
 		}
-		if(yVelocity >= -velocityBound && yVelocity <= velocityBound){
+		if(yVelocity >= -yVelocityBound && yVelocity <= yVelocityBound){
 			yVelocity += yAccelaration;
 		}
-		xVelocity = xVelocity > velocityBound ? velocityBound : xVelocity;
-		xVelocity = xVelocity < -velocityBound ? -velocityBound : xVelocity;
-		yVelocity = yVelocity < -velocityBound ? -velocityBound : yVelocity;
-		yVelocity = yVelocity > velocityBound ? velocityBound : yVelocity;
+		xVelocity = xVelocity > xVelocityBound ? xVelocityBound : xVelocity;
+		xVelocity = xVelocity < -xVelocityBound ? -xVelocityBound : xVelocity;
+		yVelocity = yVelocity < -yVelocityBound ? -yVelocityBound : yVelocity;
+		yVelocity = yVelocity > yVelocityBound ? yVelocityBound : yVelocity;
 		if(noDirectionPressed()){
 			xVelocity /= 1.15;
 			yVelocity /= 1.15;
@@ -148,22 +169,40 @@ abstract class Character extends Information{
 		}
 	}
 	boolean noDirectionPressed(){
-		if(!keyInput.upPressed && !keyInput.rightPressed && !keyInput.downPressed && !keyInput.leftPressed)
+		if(moveDeltaY == 0 && moveDeltaX == 0)
 			return true;
 		return false;
 	}
+	// boolean noDirectionPressed(){
+	// 	if(!keyInput.upPressed && !keyInput.rightPressed && !keyInput.downPressed && !keyInput.leftPressed)
+	// 		return true;
+	// 	return false;
+	// }
 	boolean isWeakShot(){
-		if (keyInput.zPressed && !keyInput.xPressed) {
+		if(weakShotBtn && !strongShotBtn){
 			return true;
 		}
 		return false;
+
 	}
-	boolean isStrongShot(){
-		if(keyInput.xPressed && !keyInput.zPressed){
+	// boolean isWeakShot(){
+	// 	if (keyInput.zPressed && !keyInput.xPressed) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
+	boolean isStrongShot()){
+		if(strongShotBtn && ! weakShotBtn){
 			return true;
-		}
+		}	
 		return false;
 	}
+	// boolean isStrongShot(){
+	// 	if(keyInput.xPressed && !keyInput.zPressed){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 	void update(){
 		if(weakShotState){
 			reset();
