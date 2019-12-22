@@ -19,6 +19,7 @@ abstract class Character extends Information{
 
 	float moveDeltaX, moveDeltaY, aimDeltaX, aimDeltaY;
 	boolean strongShotBtn = false, weakShotBtn = false;
+	JSONObject sendJson;
 
 	float rotatingRate, rotatingAddRate;
 	float rotateScalar = 0.015;
@@ -37,6 +38,8 @@ abstract class Character extends Information{
 		keyInput = _keyInput; 
 		weakArrowTmp = new WeakArrow(keyInput);
 		strongArrow = new StrongArrow(keyInput);
+		sendJson.setBoolean("l", false);
+  		sendJson.setBoolean("r", false);
 	}
 
 	void setMoveDeltaX(float _moveDeltaX){
@@ -234,6 +237,10 @@ class Player extends Character{
 				arrow.display();
 			}
 			strongArrow.update();
+			if(strongArrow.shotStrongShot){
+				strongArrow.shotStrongShot = false;
+				sendJson.setBoolean("r", true);
+			}
 			if(strongArrowAdded){
 				strongArrow.display();
 			}
@@ -281,6 +288,7 @@ class Player extends Character{
 					arrow.yPosition + arrow.arrowSize*sin(arrow.aimAngle) >= yPosition - 35 &&
 					arrow.yPosition + arrow.arrowSize*sin(arrow.aimAngle) <= yPosition + 35){
 					weakShotState = true;
+					sendJson.setBoolean("l", true);
 					weakInjuryTime = second();
 					break;
 				}
@@ -295,6 +303,8 @@ class Player extends Character{
 			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) <= yPosition + 40 && 
 			!enemy.strongArrow.arrowControl){
 			strongShotState = true;
+			sendJson.setBoolean("l", true);
+			sendJson.setBoolean("r", true);
 		}
 	}
 	void updateWeakArrow(){
@@ -400,6 +410,10 @@ class Enemy extends Character{
 				arrow.display();
 			}
 			strongArrow.update();
+			if(strongArrow.shotStrongShot){
+				strongArrow.shotStrongShot = false;
+				sendJson.setBoolean("r", true);
+			}
 			if(strongArrowAdded){
 				strongArrow.display();
 			}
@@ -453,6 +467,7 @@ class Enemy extends Character{
 					arrow.yPosition + arrow.arrowSize*sin(arrow.aimAngle) >= yPosition - 35 &&
 					arrow.yPosition + arrow.arrowSize*sin(arrow.aimAngle) <= yPosition + 35){
 					weakShotState = true;
+					sendJson.setBoolean("l", true);
 					weakInjuryTime = second();
 					break;
 				}
@@ -467,6 +482,8 @@ class Enemy extends Character{
 			enemy.strongArrow.yPosition + enemy.strongArrow.arrowSize*sin(enemy.strongArrow.aimAngle) <= yPosition + 40 &&
 			!enemy.strongArrow.arrowControl){
 			strongShotState = true;
+			sendJson.setBoolean("l", true);
+			sendJson.setBoolean("r", true);
 		}
 	}
 	void updateWeakArrow(){
@@ -520,6 +537,11 @@ class Enemy extends Character{
 			if(!strongArrowAdded){
 				strongArrow.aimAngle = getAngle(enemy);
 			}
+
+			if(aimDeltaX != 0 || aimDeltaY != 0){
+				strongArrow.updateAimAngle(aimDeltaX, aimDeltaY);
+			}
+
 			strongArrow.xPosition = xPosition;
 			strongArrow.yPosition = yPosition;
 			strongArrowAdded = true;

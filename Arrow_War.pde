@@ -44,32 +44,17 @@ void draw(){
     playerWhiteString = playerWhitePort.readStringUntil(lf);
     if (playerWhiteString != null) {
       json = parseJSONObject(playerWhiteString);
-      gameCharacter.playerWhite.setMoveDeltaX(json.getFloat(lx));
-      gameCharacter.playerWhite.setMoveDeltaY(json.getFloat(ly));
-      //json.getBoolean(l)
-      gameCharacter.playerWhite.setStrongShotBtn(json.getBoolean(zl));
-      gameCharacter.playerWhite.setAimDeltaX(json.getFloat(rx));
-      gameCharacter.playerWhite.setAimDeltaY(json.getFloat(ry));
-      //json.getBoolean(r);
-      gameCharacter.playerWhite.setWeakShotBtn(json.getBoolean(zr));
+      gameCharacter.setPlayerWhiteControl(JSONObject json);
     }
   }
-
   if( playerBlackPort.available() > 0) {
     playerBlackString = playerBlackPort.readStringUntil(lf);
     if (playerBlackString != null) {
       json = parseJSONObject(playerBlackString);
-      gameCharacter.playerBlack.setMoveDeltaX(json.getFloat(lx));
-      gameCharacter.playerBlack.setMoveDeltaY(json.getFloat(ly));
-      //json.getBoolean(l)
-      gameCharacter.playerBlack.setStrongShotBtn(json.getBoolean(zl));
-      gameCharacter.playerBlack.setAimDeltaX(json.getFloat(rx));
-      gameCharacter.playerBlack.setAimDeltaY(json.getFloat(ry));
-      //json.getBoolean(r);
-      gameCharacter.playerBlack.setWeakShotBtn(json.getBoolean(zr));
-
+      gameCharacter.setPlayerWhiteControl(JSONObject json);
     }
   }
+  gameCharacter.sendMovement();
 
   if(!gameStart && keyInput.xPressed && (second() - time >= 1 || second() - time >= -59 && second() - time < 0) ){
     time = second();

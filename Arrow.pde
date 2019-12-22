@@ -12,18 +12,18 @@ abstract class Arrow{
 		keyInput = _keyInput;
 	}
 
-	boolean isWeakShot(){
-		if (keyInput.zPressed && !keyInput.xPressed) {
-			return true;
-		}
-		return false;
-	}
-	boolean isStrongShot(){
-		if(keyInput.xPressed && !keyInput.zPressed){
-			return true;
-		}
-		return false;
-	}
+	// boolean isWeakShot(){
+	// 	if (keyInput.zPressed && !keyInput.xPressed) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
+	// boolean isStrongShot(){
+	// 	if(keyInput.xPressed && !keyInput.zPressed){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 	void updateAccelaration(){
 		accelaration += 0.5;
 	}
@@ -31,9 +31,7 @@ abstract class Arrow{
 		if(speed <= finalSpeed){
 			speed += accelaration;
 		}
-		if(speed > finalSpeed){
-			speed = finalSpeed;
-		}
+		speed = speed > finalSpeed ? finalSpeed : speed;
 	}
 	void updateVelocity(){
 		xVelocity = speed*cos(aimAngle);
@@ -96,10 +94,15 @@ class WeakArrow extends Arrow{
 }
 
 class StrongArrow extends Arrow{
+	boolean shotStrongShot = false;
+	PVector origin = new PVector(1.0, 0.0);
+	PVector aimDot = new PVector(0.0, 0.0);
+
 	float chargeAddTime = 0.15, chargeTime;
 	float strongArrowWeaponOpacity;
 	boolean arrowControl = true;
 	boolean finishCharge = false;
+
 	StrongArrow(KeyInput _keyInput){
 		super(_keyInput);
 		headSize = 24;
@@ -108,6 +111,25 @@ class StrongArrow extends Arrow{
 		strokeWeightRate = 2;
 		finalSpeed = 50;
 	}
+
+	void updateAimAngle(float x, float y){
+		aimDot.set(x, y);
+		aimDot.rotate(aimAngle);
+		origin.set(1, 0);
+
+		aimDestination = aimDot.heading();
+
+		if(origin.heading() > aimDot.heading()){
+			aimAngle -= 0.05/PI;
+		}
+		else if(origin.heading() < aimDot.heading()){
+			aimAngle += 0.05/PI;
+		}
+		else{
+			aimAngle = aimDestination;
+		}
+	}
+
 	void reset(){
 		xPosition = -100;
 		yPosition = -100;
@@ -187,6 +209,7 @@ class StrongArrow extends Arrow{
 		}
 		if(!arrowControl && finishCharge){
 			updatePosition();
+			shotStrongShot = true;
 		}
 	}
 	void display(){
