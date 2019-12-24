@@ -6,24 +6,25 @@ abstract class Arrow{
 	float aimAngle;
 	float strokeWeightRate;
 	float headSize, arrowSize, featherSize;
+	//Boolean strongShotBtn = false, weakShotBtn = false;
 	KeyInput keyInput = new KeyInput();
 
 	Arrow(KeyInput _keyInput){
 		keyInput = _keyInput;
 	}
 
-	// boolean isWeakShot(){
-	// 	if (keyInput.zPressed && !keyInput.xPressed) {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
-	// boolean isStrongShot(){
-	// 	if(keyInput.xPressed && !keyInput.zPressed){
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
+	boolean isWeakShot(){
+		if (keyInput.zPressed && !keyInput.xPressed) {
+			return true;
+		}
+		return false;
+	}
+	boolean isStrongShot(){
+		if(keyInput.xPressed && !keyInput.zPressed){
+			return true;
+		}
+		return false;
+	}
 	void updateAccelaration(){
 		accelaration += 0.5;
 	}
@@ -94,6 +95,8 @@ class WeakArrow extends Arrow{
 }
 
 class StrongArrow extends Arrow{
+	//JsonInput jsonInput = new JsonInput();
+	float aimDestination;
 	boolean shotStrongShot = false;
 	PVector origin = new PVector(1.0, 0.0);
 	PVector aimDot = new PVector(0.0, 0.0);
@@ -105,6 +108,7 @@ class StrongArrow extends Arrow{
 
 	StrongArrow(KeyInput _keyInput){
 		super(_keyInput);
+		//jsonInput = _jsonInput;
 		headSize = 24;
 		arrowSize = 150;
 		featherSize = 18;
@@ -112,6 +116,19 @@ class StrongArrow extends Arrow{
 		finalSpeed = 50;
 	}
 
+	// boolean isStrongShot(){
+ //    	// println("jsonInput.zPressed: "+jsonInput.zPressed);
+ //    	// println("jsonInput.xPressed: "+jsonInput.xPressed);
+ //    	if(jsonInput == null){
+ //    		//println("HI");
+ //    		return false;
+ //    	}  
+	// 	if(jsonInput.strongPressed && ! jsonInput.weakPressed){
+	// 		println("HI: "+jsonInput);
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 	void updateAimAngle(float x, float y){
 		aimDot.set(x, y);
 		aimDot.rotate(aimAngle);
@@ -120,12 +137,14 @@ class StrongArrow extends Arrow{
 		aimDestination = aimDot.heading();
 
 		if(origin.heading() > aimDot.heading()){
-			aimAngle -= 0.05/PI;
+			aimAngle += 0.08/PI;
 		}
 		else if(origin.heading() < aimDot.heading()){
-			aimAngle += 0.05/PI;
+			aimAngle -= 0.08/PI;
 		}
 		else{
+			aimDot.rotate(-aimAngle);
+			aimDestination = aimDot.heading();
 			aimAngle = aimDestination;
 		}
 	}

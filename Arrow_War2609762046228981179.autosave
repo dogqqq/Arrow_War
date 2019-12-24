@@ -1,4 +1,5 @@
 import processing.serial.*;
+import java.lang.Throwable;
 
 boolean gameStart = false, laugh = false;
 int condition;
@@ -16,11 +17,8 @@ int lf = 10;
 Serial playerWhitePort, playerBlackPort;
 String playerWhiteString = null, playerBlackString = null;
 JSONObject json;
-StringBuilder strTrue = new StringBuilder("true");
-StringBuilder strFalse = new StringBuilder("false");
-StringBuilder str1 = new StringBuilder("{\"l\":");
-StringBuilder str2 = new StringBuilder(",\"r\":");
-StringBuilder str3 = new StringBuilder("}");
+JsonInput playerBlackInput = new JsonInput();
+JsonInput playerWhiteInput = new JsonInput();
 
 void setup(){
   size(700, 800);
@@ -30,8 +28,8 @@ void setup(){
   tFont = createFont("Lato-Regular.ttf", 96.0, true);
   textFont(tFont, 96.0);
 
-  playerWhitePort = new Serial(this, "COM7", 38400);  //unchecked port
-  playerBlackPort = new Serial(this, "COM8", 38400);  //unchecked port
+  playerWhitePort = new Serial(this, "COM7", 115200);  //unchecked port
+  playerBlackPort = new Serial(this, "COM6", 115200);  //unchecked port
   playerWhitePort.clear();
   playerBlackPort.clear();
 
@@ -42,16 +40,18 @@ void setup(){
 
 void draw(){
   gameBackground.run();
+  println("time: ", + time);
+  println("second(): " + second());
 
   if( playerWhitePort.available() > 0) {
     playerWhiteString = playerWhitePort.readStringUntil(lf);
     if (playerWhiteString != null) {
       try{
         json = parseJSONObject(playerWhiteString);
-        //println("White: "+json);
+        println("White: "+json);
         gameCharacter.setPlayerWhiteControl(json);
-      }catch (RuntimeException e) {
-        
+      }catch(RuntimeException e){
+        e.printStackTrace();
       }
     }
   }
@@ -60,11 +60,11 @@ void draw(){
     if (playerBlackString != null) {
       try{
         json = parseJSONObject(playerBlackString);
-        //println("Black: "+json);
+        println("Black: "+json);
         gameCharacter.setPlayerBlackControl(json);
-      }catch(RuntimeException e){
-
-      }
+       }catch(RuntimeException e){
+         e.printStackTrace();
+       }
     }
   }
   //gameCharacter.sendMovement();
@@ -100,12 +100,11 @@ void draw(){
     gameCharacter.display();
     outcomeMessage = new OutcomeMessage(gameCharacter.condition);
     outcomeMessage.display();
-    delay(1000);
   }
-  // else if(condition == 4 && !gameStart){
-  //   gameCharacter.display();
-  //   outcomeMessage.displayLaugh();
-  // }
+  else if(condition == 4 && !gameStart){
+    gameCharacter.display();
+    outcomeMessage.displayLaugh();
+  }
   else if(gameStart){
     gameCharacter.run();
   }

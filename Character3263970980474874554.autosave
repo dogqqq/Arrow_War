@@ -19,8 +19,7 @@ abstract class Character extends Information{
 
 	float moveDeltaX, moveDeltaY, aimDeltaX, aimDeltaY;
 	boolean strongShotBtn = false, weakShotBtn = false;
-	//String s = {"\{\"l\":false\,\"r\":false\}"};
-	//StringBuilder sendString = new StringBuilder(str1+strFalse+str2+strFalse+str3);
+	String s = "\"{\"l\":false,\"r\":false}\"";
 
 	float rotatingRate, rotatingAddRate;
 	float rotateScalar = 0.015;
@@ -239,7 +238,7 @@ class Player extends Character{
 			strongArrow.update();
 			if(strongArrow.shotStrongShot){
 				strongArrow.shotStrongShot = false;
-				//sendString = ("r", true);
+				//sendJson.setBoolean("r", true);
 			}
 			if(strongArrowAdded){
 				strongArrow.display();

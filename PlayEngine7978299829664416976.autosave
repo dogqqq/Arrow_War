@@ -1,8 +1,8 @@
 class GameCharacter{
 	int condition;
 
-	Player playerWhite = new Player(keyInputWhite);
-	Enemy playerBlack = new Enemy(keyInputBlack);
+	Player playerWhite = new Player(keyInputWhite, playerWhiteInput);
+	Enemy playerBlack = new Enemy(keyInputBlack, playerBlackInput);
 
 	GameCharacter(){
 		playerWhite.setOriginPosition();
@@ -14,57 +14,33 @@ class GameCharacter{
 	    playerWhite.setMoveDeltaY(control.getFloat("ly"));
 	    //control.getBoolean(l)
 	    playerWhite.setStrongShotBtn(control.getBoolean("zl"));
-	    if(control.getBoolean("zl")){
-			keyInputWhite.xPressed = true;
-		}
-	    else{
-	    	keyInputWhite.xPressed = false;
-	    }
 	    playerWhite.setAimDeltaX(control.getFloat("rx"));
 	    playerWhite.setAimDeltaY(control.getFloat("ry"));
 	    //control.getBoolean(r);
 	  	playerWhite.setWeakShotBtn(control.getBoolean("zr"));
-	  	if(control.getBoolean("zr")){
-	  		keyInputWhite.zPressed = true;
-	  	}
-	  	else{
-	  		keyInputWhite.zPressed = false;
-	  	}
 	}
 	void setPlayerBlackControl(JSONObject control){
 		playerBlack.setMoveDeltaX(control.getFloat("lx"));
 	    playerBlack.setMoveDeltaY(control.getFloat("ly"));
 	    //control.getBoolean(l)
-	    //playerBlack.setStrongShotBtn(control.getBoolean("zl"));
-	    if(control.getBoolean("zl")){
-			keyInputBlack.xPressed = true;
-		}
-	    else{
-	    	keyInputBlack.xPressed = false;
-	    }
+	    playerBlack.setStrongShotBtn(control.getBoolean("zl"));
 	    playerBlack.setAimDeltaX(control.getFloat("rx"));
 	    playerBlack.setAimDeltaY(control.getFloat("ry"));
 	    //control.getBoolean(r);
-	  	//playerBlack.setWeakShotBtn(control.getBoolean("zr"));
-	  	if(control.getBoolean("zr")){
-	  		keyInputBlack.zPressed = true;
-	  	}
-	  	else{
-	  		keyInputBlack.zPressed = false;
-	  	}
+	  	playerBlack.setWeakShotBtn(control.getBoolean("zr"));
 	}
-	// void sendMovement(){
-	// 	playerBlackPort.write(playerBlack.sendString);
-	// 	if(playerBlack.sendString.getBoolean(l) || playerBlack.sendString.getBoolean(r)){
-	// 		playerBlack.sendString.setBoolean("l", false);
-	// 		playerBlack.sendString.setBoolean("r", false);
-	// 	}
-	// 	playerWhitePort.write(playerWhite.sendString);
-	// 	if(playerWhite.sendString.getBoolean(l) || playerWhite.sendString.getBoolean(r)){
-	// 		playerWhite.sendString.setBoolean("l", false);
-	// 		playerWhite.sendString.setBoolean("r", false);
-	// 	}
-	// }
+	void sendMovement(){
+		playerBlackPort.write(playerBlack.sendJson);
+		if(playerBlack.sendJson.getBoolean("l") || playerBlack.sendJson.getBoolean("r")){
+			playerBlack.sendJson.setBoolean("l", false);
+			playerBlack.sendJson.setBoolean("r", false);
+		}
+		playerWhitePort.write(playerWhite.sendJson);
+		if(playerWhite.sendJson.getBoolean("l") || playerWhite.sendJson.getBoolean("r")){
+			playerWhite.sendJson.setBoolean("l", false);
+			playerWhite.sendJson.setBoolean("r", false);
+		}
+	}
 
 	void setStartPosition(){
 		playerWhite.setOriginPosition();
